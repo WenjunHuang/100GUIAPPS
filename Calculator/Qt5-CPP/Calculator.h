@@ -14,6 +14,7 @@ class Calculator: public QWidget {
     Q_OBJECT
 public:
     explicit Calculator(QWidget *parent = nullptr);
+    ~Calculator();
 
 private:
     Q_DECLARE_PRIVATE(Calculator)
