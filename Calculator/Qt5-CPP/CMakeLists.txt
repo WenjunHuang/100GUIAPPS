@@ -11,5 +11,5 @@ set(CMAKE_PREFIX_PATH $ENV{QT_CMAKE})
 
 find_package(Qt5 REQUIRED Core Widgets)
 
-add_executable(Calculator main.cpp)
+add_executable(Calculator main.cpp Button.h Button.cc Calculator.cc Calculator.h)
 qt5_use_modules(Calculator LINK_PRIVATE Widgets)
