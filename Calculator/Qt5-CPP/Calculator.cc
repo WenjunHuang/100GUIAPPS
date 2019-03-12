@@ -132,7 +132,17 @@ struct CalculatorPrivate {
 
     void clearClicked(Button *sender) {}
 
-    void digitClicked(Button *sender) {}
+    void digitClicked(Button *sender) {
+      int digitValue = sender->text().toInt();
+      if (display->text() == "0" && digitValue == 0.0)
+        return;
+
+      if (waitingForOperand) {
+        display->clear();
+        waitingForOperand = false;
+      }
+      display->setText(display->text() + QString::number(digitValue));
+    }
 
     void pointClicked(Button *sender) {}
 
