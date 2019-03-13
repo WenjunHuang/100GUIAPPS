@@ -6,7 +6,7 @@ import scalafx.application.JFXApp
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
 import scalafx.scene.control.{Button, TextField}
-import scalafx.scene.layout.GridPane
+import scalafx.scene.layout.{Border, GridPane}
 import scalafx.scene.text.Font
 
 object Calculator extends JFXApp {
@@ -19,7 +19,8 @@ object Calculator extends JFXApp {
       content = new GridPane {
         hgap = 9.0
         vgap = 9.0
-        margin = Insets(11.0)
+        padding = Insets(11.0)
+        style = "-fx-border-color:black"
 
         val display = new TextField {
           text = "0"
@@ -75,6 +76,7 @@ object Calculator extends JFXApp {
         GridPane.setConstraints(addToMemoryButton,0,5)
         children += addToMemoryButton
 
+        println(delegate.getColumnCount)
       }
     }
 
