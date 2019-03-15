@@ -76,17 +76,17 @@ object Calculator extends JFXApp {
         GridPane.setConstraints(addToMemoryButton,0,5)
         children += addToMemoryButton
 
+
+        println(s"width:${addToMemoryButton.getPrefWidth},height:${addToMemoryButton.getPrefHeight}")
         println(delegate.getColumnCount)
       }
     }
-
   }
-  stage.sizeToScene()
 
   def createButton(buttonText: String, clicked: Button => Unit): Button = {
     new Button { self =>
       text = buttonText
-      prefHeight = prefHeight.value + 20.0
+//      prefHeight = prefHeight.value + 20.0
       onAction = { _ =>
         clicked(self)
       }
