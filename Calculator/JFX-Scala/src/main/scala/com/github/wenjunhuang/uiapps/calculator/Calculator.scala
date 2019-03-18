@@ -33,7 +33,7 @@ object Calculator extends JFXApp {
 
         val digitButtons = (0 until kNumDigitButtons).map(num => createButton(num.toString, digitClicked))
         val pointButton = createButton(".", pointClicked)
-        val changeSignButton = createButton("\u00B1", changeSignClicked)
+        val changeSignButton = createButton("±", changeSignClicked)
 
         val backspaceButton = createButton("Backspace", backspaceClicked)
         val clearButton = createButton("Clear", clearClicked)
@@ -44,8 +44,8 @@ object Calculator extends JFXApp {
         val setMemoryButton = createButton("MS", setMemoryClicked)
         val addToMemoryButton = createButton("M+", addToMemoryClicked)
 
-        val divisionButton = createButton("\303\267", multiplicativeOperatorClicked)
-        val timesButton = createButton("\303\227", multiplicativeOperatorClicked)
+        val divisionButton = createButton("÷", multiplicativeOperatorClicked)
+        val timesButton = createButton("×", multiplicativeOperatorClicked)
         val minusButton = createButton("-", additiveOperatorClicked)
         val plusButton = createButton("+", additiveOperatorClicked)
 
