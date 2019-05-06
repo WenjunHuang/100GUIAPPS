@@ -1,0 +1,7 @@
+[package]
+name = "GTK-Rust"
+version = "0.1.0"
+authors = ["黄文俊 <huangwj@goldlokedu.cn>"]
+edition = "2018"
+
+[dependencies]
