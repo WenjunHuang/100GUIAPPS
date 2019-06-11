@@ -8,8 +8,13 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
 set(CMAKE_PREFIX_PATH $ENV{QT_CMAKE})
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
 
 find_package(Qt5 REQUIRED Core Widgets)
+find_package(RxCpp REQUIRED)
+
 
 add_executable(Calculator main.cpp Button.h Button.cc Calculator.cc Calculator.h)
-qt5_use_modules(Calculator LINK_PRIVATE Widgets)
+target_link_libraries(Calculator LINK_PRIVATE Qt5::Widgets)
+target_include_directories(Calculator PUBLIC ${rxcpp_INCLUDE_DIR})

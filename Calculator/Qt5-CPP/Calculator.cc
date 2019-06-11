@@ -5,6 +5,7 @@
 #include "Button.h"
 #include <QtWidgets>
 #include <functional>
+#include <rxcpp/rx.hpp>
 
 constexpr int kNumDigitButtons = 10;
 

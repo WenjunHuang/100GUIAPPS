@@ -4,7 +4,6 @@ version := "0.1"
 
 scalaVersion := "2.12.6"
 
-
 val osName: SettingKey[String] = SettingKey[String]("osName")
 val jfxVersion = "11.0.2"
 

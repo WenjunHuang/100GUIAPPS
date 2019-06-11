@@ -10,18 +10,25 @@ import scalafx.scene.layout.{Border, GridPane, Region}
 import scalafx.scene.text.Font
 import javafx.scene.control.{Button => jfxButton}
 
+import scala.util.Try
+
 object Calculator extends JFXApp {
   val kNumDigitButtons = 10
+
+  var display: TextField = _
+  var waitingForOperand = true
+
 
   stage = new application.JFXApp.PrimaryStage {
     title.value = "Calculator"
     scene = new Scene {
+      stylesheets
       content = new GridPane {
         hgap = 9.0
         vgap = 9.0
         padding = Insets(11.0)
 
-        val display = new TextField {
+        display = new TextField {
           text = "0"
           alignment = Pos.CenterRight
           prefColumnCount = 15
@@ -97,25 +104,35 @@ object Calculator extends JFXApp {
         GridPane.setConstraints(timesButton, 4, 3)
 
         children += minusButton
-        GridPane.setConstraints(minusButton,4,4)
+        GridPane.setConstraints(minusButton, 4, 4)
 
         children += plusButton
-        GridPane.setConstraints(plusButton,4,5)
+        GridPane.setConstraints(plusButton, 4, 5)
 
         children += squareRootButton
-        GridPane.setConstraints(squareRootButton,5,2)
+        GridPane.setConstraints(squareRootButton, 5, 2)
 
         children += powerButton
-        GridPane.setConstraints(powerButton,5,3)
+        GridPane.setConstraints(powerButton, 5, 3)
 
         children += reciprocalButton
-        GridPane.setConstraints(reciprocalButton,5,4)
+        GridPane.setConstraints(reciprocalButton, 5, 4)
 
         children += equalButton
-        GridPane.setConstraints(equalButton,5,5)
+        GridPane.setConstraints(equalButton, 5, 5)
+
+        minHeight = Region.USE_PREF_SIZE
+        minWidth = Region.USE_PREF_SIZE
+        maxWidth = Region.USE_PREF_SIZE
+        maxWidth = Region.USE_PREF_SIZE
       }
     }
-    resizable = false
+
+    //    resizable = false
+    onShown = { e ⇒
+      sizeToScene()
+      //      resizable = false
+    }
   }
 
   def createButton(buttonText: String, clicked: Button => Unit): Button = {
@@ -134,7 +151,20 @@ object Calculator extends JFXApp {
 
   def changeSignClicked(button: Button) = ???
 
-  def digitClicked(button: Button) = ???
+  def digitClicked(button: Button) = {
+    Try(button.text.value.toInt)
+      .toOption
+      .filterNot { value =>
+        value == 0 && display.text.value == "0"
+      }
+      .foreach { value =>
+        if (waitingForOperand) {
+          display.clear()
+          waitingForOperand = false
+        }
+        display.text = s"${display.text.value}$value"
+      }
+  }
 
   def pointClicked(button: Button) = ???
 
