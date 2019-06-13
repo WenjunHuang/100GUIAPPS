@@ -10,11 +10,16 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
 set(CMAKE_PREFIX_PATH $ENV{QT_CMAKE})
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-
+find_package(GMP)
 find_package(Qt5 REQUIRED Core Widgets)
 find_package(RxCpp REQUIRED)
 
 
-add_executable(Calculator main.cpp Button.h Button.cc Calculator.cc Calculator.h)
-target_link_libraries(Calculator LINK_PRIVATE Qt5::Widgets)
-target_include_directories(Calculator PUBLIC ${rxcpp_INCLUDE_DIR})
+add_executable(Calculator main.cpp
+        Button.h
+        Button.cc
+        Calculator.cc
+        Calculator.h
+        number/Number.cc number/NumberBase.h number/NumberInteger.cc number/NumberInteger.h)
+target_link_libraries(Calculator LINK_PRIVATE Qt5::Widgets ${GMP_LIBRARIES})
+target_include_directories(Calculator PUBLIC ${rxcpp_INCLUDE_DIR} ${GMP_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/knumber)
