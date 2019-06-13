@@ -40,7 +40,23 @@ qint64 NumberInteger::toInt64() const { return 0; }
 bool NumberInteger::isInteger() const { return false; }
 bool NumberInteger::isZero() const { return false; }
 int NumberInteger::sign() const { return 0; }
-NumberBase* NumberInteger::add(NumberBase* rhs) { return nullptr; }
+NumberBase* NumberInteger::add(NumberBase* rhs) {
+  if (auto * const p = dynamic_cast<NumberInteger*>(rhs)) {
+    _mpz += p->_mpz;
+    return this;
+  }else if(auto  p = dynamic_cast<NumberFloat*>(rhs)) {
+    auto * const f = new NumberFloat(this);
+    delete this;
+    return f->add(p);
+  }else if (auto *const p = dynamic_cast<NumberFraction *>(rhs)) {
+    const auto  q = new NumberFraction(this);
+    delete this;
+    return q->add(p);
+  }else if (const auto p = dynamic_cast<NumberError*>(rhs)) {
+    delete this;
+    return p->clone();
+  }
+}
 NumberBase* NumberInteger::sub(NumberBase* rhs) { return nullptr; }
 NumberBase* NumberInteger::mul(NumberBase* rhs) { return nullptr; }
 NumberBase* NumberInteger::div(NumberBase* rhs) { return nullptr; }
@@ -80,5 +96,17 @@ NumberBase* NumberInteger::acosh() { return nullptr; }
 NumberBase* NumberInteger::atanh() { return nullptr; }
 NumberBase* NumberInteger::tgamma() { return nullptr; }
 int NumberInteger::compare(NumberBase* rhs) { return 0; }
-NumberInteger::NumberInteger(const NumberInteger* value) {}
+NumberInteger::NumberInteger(const NumberInteger* value) {
+  _mpz = value->_mpz;
+}
+NumberInteger::NumberInteger(const NumberFraction* value) {
+  _mpz = value->_mpq;
+}
+NumberInteger::NumberInteger(const NumberFloat* value) {
+  _mpz = value->_mpf;
+}
+NumberInteger::NumberInteger(const NumberError* value) {}
+NumberBase* NumberInteger::clone() {
+  return new NumberInteger(this);
+}
 } // namespace detail
