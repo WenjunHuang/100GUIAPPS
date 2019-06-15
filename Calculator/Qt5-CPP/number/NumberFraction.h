@@ -1,29 +1,39 @@
 //
-// Created by rick on 19-6-14.
+// Created by rick on 19-6-15.
 //
 
 #pragma once
+
 #include "NumberBase.h"
 
 class Number;
 namespace detail {
-class NumberFloat : public NumberBase {
+class NumberFloat;
+class NumberError;
+class NumberInteger;
+
+class NumberFraction : public NumberBase {
   friend class ::Number;
   friend class NumberError;
   friend class NumberInteger;
-  friend class NumberFaction;
+  friend class NumberFloat;
 
 public:
-  explicit NumberFloat(const QString& s);
-  explicit NumberFloat(double value);
-  explicit NumberFloat(mpf_class mpf);
-  virtual ~NumberFloat();
+  static bool DefaultFractionalInput;
+  static bool DefaultFractionalOutput;
+  static bool SplitoffIntegerForFractionOutput;
 
-private:
-  explicit NumberFloat(const NumberInteger* value);
-  explicit NumberFloat(const NumberFraction* value);
-  explicit NumberFloat(const NumberFloat* value);
-  explicit NumberFloat(const NumberError* value);
+public:
+  static void setDefaultFractionalInput(bool value);
+  static void setDefaultFractionalOutput(bool value);
+  static void setSplitoffIntegerForFractionOutput(bool value);
+
+public:
+  explicit NumberFraction(const QString& s);
+  NumberFraction(qint64 num, quint64 den);
+  NumberFraction(quint64 num, quint64 den);
+  explicit NumberFraction(mpq_t mpq);
+  virtual ~NumberFraction();
 
 public:
   NumberBase* clone() override;
@@ -96,10 +106,16 @@ public:
   int compare(NumberBase* rhs) override;
 
 private:
-  template<double F(double)> NumberBase* executeLibCFunc(double x);
-  template<double F(double,double)> NumberBase* executeLibCFunc(double x,double y);
+  NumberInteger* numerator() const;
+  NumberInteger* denominator() const;
 
 private:
-  mpf_class _mpf;
+  // conversion constructors
+  explicit NumberFraction(const NumberInteger* value);
+  explicit NumberFraction(const NumberFraction* value);
+  explicit NumberFraction(const NumberError* value);
+
+private:
+  mpq_class _mpq;
 };
 } // namespace detail

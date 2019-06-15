@@ -7,6 +7,8 @@
 #include <QString>
 #include <QtGlobal>
 #include "NumberInteger.h"
+#include "NumberFloat.h"
+
 
 
 namespace detail {

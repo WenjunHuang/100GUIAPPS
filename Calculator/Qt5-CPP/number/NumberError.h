@@ -3,27 +3,30 @@
 //
 
 #pragma once
+
 #include "NumberBase.h"
 
 class Number;
+
 namespace detail {
-class NumberFloat : public NumberBase {
+class NumberInteger;
+class NumberFraction;
+class NumberFloat;
+
+class NumberError : public NumberBase {
   friend class ::Number;
-  friend class NumberError;
   friend class NumberInteger;
-  friend class NumberFaction;
+  friend class NumberFraction;
+  friend class NumberFloat;
 
 public:
-  explicit NumberFloat(const QString& s);
-  explicit NumberFloat(double value);
-  explicit NumberFloat(mpf_class mpf);
-  virtual ~NumberFloat();
+  enum Error { ERROR_UNDEFINED, ERROR_POS_INFINITY, ERROR_NEG_INFINITY };
 
-private:
-  explicit NumberFloat(const NumberInteger* value);
-  explicit NumberFloat(const NumberFraction* value);
-  explicit NumberFloat(const NumberFloat* value);
-  explicit NumberFloat(const NumberError* value);
+public:
+  explicit NumberError(const QString& s);
+  explicit NumberError(Error e);
+  NumberError();
+  virtual ~NumberError();
 
 public:
   NumberBase* clone() override;
@@ -96,10 +99,12 @@ public:
   int compare(NumberBase* rhs) override;
 
 private:
-  template<double F(double)> NumberBase* executeLibCFunc(double x);
-  template<double F(double,double)> NumberBase* executeLibCFunc(double x,double y);
-
+  explicit NumberError(const NumberInteger* value);
+  explicit NumberError(const NumberFraction* value);
+  explicit NumberError(const NumberFloat* value);
+  explicit NumberError(const NumberError* value);
 private:
-  mpf_class _mpf;
+    Error _error;
 };
+
 } // namespace detail

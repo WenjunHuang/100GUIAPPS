@@ -20,6 +20,6 @@ add_executable(Calculator main.cpp
         Button.cc
         Calculator.cc
         Calculator.h
-        number/Number.cc number/NumberBase.h number/NumberInteger.cc number/NumberInteger.h number/NumberFloat.cc number/NumberFloat.h)
+        number/Number.cc number/NumberBase.h number/NumberInteger.cc number/NumberInteger.h number/NumberFloat.cc number/NumberFloat.h number/NumberError.cc number/NumberError.h number/NumberFraction.cc number/NumberFraction.h)
 target_link_libraries(Calculator LINK_PRIVATE Qt5::Widgets ${GMP_LIBRARIES})
 target_include_directories(Calculator PUBLIC ${rxcpp_INCLUDE_DIR} ${GMP_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/knumber)
