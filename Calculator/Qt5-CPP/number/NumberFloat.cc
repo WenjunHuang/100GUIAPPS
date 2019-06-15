@@ -6,8 +6,10 @@
 #include "NumberError.h"
 #include "NumberFraction.h"
 #include "NumberInteger.h"
+#include <QtCore/QScopedArrayPointer>
 #include <QtGlobal>
 #include <math.h>
+#include <memory>
 
 namespace detail {
 template <double F(double)> NumberBase* NumberFloat::executeLibCFunc(double x) {
@@ -423,6 +425,113 @@ int NumberFloat::compare(NumberBase* rhs) {
 }
 
 QString NumberFloat::toString(int precision) const {
+  size_t size;
+  if (precision > 0) {
+    size = gmp_snprintf(nullptr,0,"%.*Fg",precision,_mpf.get_mpf_t()) + 1;
+  } else {
+    size = gmp_snprintf(nullptr,0,"%.Fg",_mpf.get_mpf_t()) + 1;
+  }
 
+  auto buf = std::make_unique<char[]>(size);
+
+  if (precision > 0) {
+    gmp_snprintf(buf.get(),size,"%.*Fg",precision,_mpf.get_mpf_t());
+  }else {
+    gmp_snprintf(buf.get(),size,"%.Fg",_mpf.get_mpf_t());
+  }
+
+  return QLatin1String(buf.get());
+}
+
+bool NumberFloat::isInteger() const {
+  return mpf_integer_p(_mpf.get_mpf_t()) != 0;
+}
+
+bool NumberFloat::isZero() const {
+  return ::sgn(_mpf) == 0;
+}
+
+int NumberFloat::sign() const {
+  return ::sgn(_mpf);
+}
+
+NumberBase* NumberFloat::reciprocal() {
+  _mpf = 1.0 / _mpf;
+  return this;
+}
+
+NumberBase* NumberFloat::log2() {
+  const double x = _mpf.get_d();
+  if (isinf(x)) {
+    delete this;
+    return new NumberError(NumberError::ERROR_POS_INFINITY);
+  }else {
+    return executeLibCFunc<::log2>(x);
+  }
+}
+
+NumberBase* NumberFloat::log10() {
+  const double x = _mpf.get_d();
+
+  if (isinf(x)) {
+    delete this;
+    return new NumberError(NumberError::ERROR_POS_INFINITY);
+  } else {
+    return executeLibCFunc<::log10>(x);
+  }
+}
+
+NumberBase* NumberFloat::ln() {
+  const double x = _mpf.get_d();
+  if (isinf(x)) {
+    delete this;
+    return new NumberError(NumberError::ERROR_POS_INFINITY);
+  } else {
+    return executeLibCFunc<::log>(x);
+  }
+}
+
+NumberBase* NumberFloat::exp2() {
+  const double x = _mpf.get_d();
+  if (isinf(x)) {
+    delete this;
+    return new NumberError(NumberError::ERROR_POS_INFINITY);
+  } else {
+    return executeLibCFunc<::exp2>(x);
+  }
+}
+
+NumberBase* NumberFloat::exp10() {
+  const double x = _mpf.get_d();
+  if (isinf(x)) {
+    delete this;
+    return new NumberError(NumberError::ERROR_POS_INFINITY);
+  } else {
+    return executeLibCFunc<::pow>(10,x);
+  }
+}
+
+NumberBase* NumberFloat::exp() {
+  const double x = _mpf.get_d();
+  if (isinf(x)) {
+    delete this;
+    return new NumberError(NumberError::ERROR_POS_INFINITY);
+  } else {
+    return executeLibCFunc<::exp>(x);
+  }
+}
+
+quint64 NumberFloat::toUint64() const {
+  return NumberInteger(this).toUint64();
+}
+
+qint64 NumberFloat::toInt64() const {
+  return NumberInteger(this).toInt64();
+}
+
+NumberBase* NumberFloat::bin(NumberBase* rhs) {
+  Q_UNUSED(rhs);
+  delete this;
+  return new NumberError(NumberError::ERROR_UNDEFINED);
 }
 }
