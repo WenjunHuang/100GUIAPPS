@@ -14,7 +14,7 @@ class NumberFloat;
 
 class NumberBase {
 public:
-  virtual ~NumberBase();
+  virtual ~NumberBase() {}
 
 public:
   virtual NumberBase* clone() = 0;

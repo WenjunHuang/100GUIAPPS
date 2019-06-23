@@ -4,29 +4,36 @@
 
 #pragma once
 #include "NumberBase.h"
+#include "NumberError.h"
+#include "NumberFraction.h"
 
 class Number;
 
 namespace detail {
 class NumberInteger : public NumberBase {
-    friend class ::Number;
-    friend class NumberError;
-    friend class NumberFraction;
-    friend class NumberFloat;
+  friend class ::Number;
+  friend class NumberError;
+  friend class NumberFraction;
+  friend class NumberFloat;
 
 public:
-    explicit NumberInteger(const QString& s);
-    explicit NumberInteger(qint32 value);
-    explicit NumberInteger(qint64 value);
-    explicit NumberInteger(quint32 value);
-    explicit NumberInteger(quint64 value);
-    explicit NumberInteger(mpz_class mpz);
-    ~NumberInteger() override;
+  explicit NumberInteger(const QString& s);
+  explicit NumberInteger(qint32 value);
+  explicit NumberInteger(qint64 value);
+  explicit NumberInteger(quint32 value);
+  explicit NumberInteger(quint64 value);
+  explicit NumberInteger(mpz_t mpz);
+  ~NumberInteger() override;
+
 public:
-    NumberBase* clone() override;
+  NumberBase* clone() override;
   QString toString(int precision) const override;
   quint64 toUint64() const override;
   qint64 toInt64() const override;
+
+
+  virtual bool isEven() const;
+  virtual bool isOdd() const;
   bool isInteger() const override;
   bool isZero() const override;
   int sign() const override;
@@ -72,16 +79,13 @@ public:
   int compare(NumberBase* rhs) override;
 
 private:
-    // conversion constructors
-    explicit NumberInteger(const NumberInteger* value);
-    explicit NumberInteger(const NumberFraction* value);
-    explicit NumberInteger(const NumberFloat *value);
-    explicit NumberInteger(const NumberError* value);
+  // conversion constructors
+  explicit NumberInteger(const NumberInteger* value);
+  explicit NumberInteger(const NumberFraction* value);
+  explicit NumberInteger(const NumberFloat* value);
+  explicit NumberInteger(const NumberError* value);
 
 private:
-    mpz_class _mpz;
+  mpz_t _mpz;
 };
-}
-
-
-
+} // namespace detail

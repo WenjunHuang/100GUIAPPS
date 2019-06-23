@@ -100,6 +100,6 @@ private:
   template<double F(double,double)> NumberBase* executeLibCFunc(double x,double y);
 
 private:
-  mpf_class _mpf;
+  mpf_t _mpf;
 };
 } // namespace detail

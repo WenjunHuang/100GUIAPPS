@@ -116,6 +116,6 @@ private:
   explicit NumberFraction(const NumberError* value);
 
 private:
-  mpq_class _mpq;
+  mpq_t _mpq;
 };
 } // namespace detail
