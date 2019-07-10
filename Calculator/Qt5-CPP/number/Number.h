@@ -4,11 +4,10 @@
 
 #pragma once
 
+#include <memory>
 #include <QString>
 #include <QtGlobal>
-#include "NumberInteger.h"
-#include "NumberFloat.h"
-
+#include "NumberOperators.h"
 
 
 namespace detail {
@@ -53,8 +52,8 @@ public:
     explicit Number(qint64 value);
     explicit Number(quint32 value);
     explicit Number(quint64 value);
-
     explicit Number(long double value);
+    explicit Number(double value);
 
     Number(qint64 num,quint64 den);
     Number(quint64 num,quint64 den);
@@ -146,7 +145,7 @@ private:
     void simplify();
 
 private:
-    detail::NumberBase *value;
+    std::unique_ptr<detail::NumberBase*> _value;
 
 private:
     static QString GroupSeparator;

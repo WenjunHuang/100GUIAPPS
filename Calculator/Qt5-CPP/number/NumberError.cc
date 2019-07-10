@@ -262,6 +262,7 @@ NumberBase* NumberError::cos() {
 NumberBase* NumberError::tan() {
   _error = ERROR_UNDEFINED;
   return this;
+}
 NumberBase* NumberError::asin() { return nullptr; }
 NumberBase* NumberError::acos() { return nullptr; }
 NumberBase* NumberError::atan() {

@@ -544,7 +544,7 @@ int NumberInteger::compare(NumberBase* rhs) {
   } else if (auto p = dynamic_cast<NumberFloat*>(rhs)) {
     return NumberFloat(this).compare(p);
   } else if (auto p = dynamic_cast<NumberFraction*>(rhs)) {
-    return NumberFraction(this).cmp(p);
+    return NumberFraction(this).compare(p);
   } else if (auto p = dynamic_cast<NumberError*>(rhs)) {
     return -1;
   }

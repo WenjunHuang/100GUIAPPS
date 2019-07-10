@@ -4,6 +4,7 @@
 
 #pragma once
 #include "NumberBase.h"
+#include "GmpType.h"
 
 class Number;
 namespace detail {
@@ -11,7 +12,7 @@ class NumberFloat : public NumberBase {
   friend class ::Number;
   friend class NumberError;
   friend class NumberInteger;
-  friend class NumberFaction;
+  friend class NumberFraction;
 
 public:
   explicit NumberFloat(const QString& s);
@@ -100,6 +101,6 @@ private:
   template<double F(double,double)> NumberBase* executeLibCFunc(double x,double y);
 
 private:
-  mpf_t _mpf;
+  Mpf _mpf;
 };
 } // namespace detail

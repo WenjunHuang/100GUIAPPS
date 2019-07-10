@@ -5,7 +5,7 @@ add_library(number
         NumberBase.h
         NumberInteger.cc
         NumberInteger.h
-        NumberFloat.cc NumberFloat.h NumberError.cc NumberError.h NumberFraction.cc NumberFraction.h)
+        NumberFloat.cc NumberFloat.h NumberError.cc NumberError.h NumberFraction.cc NumberFraction.h GmpType.h NumberOperators.h NumberOperators.cc)
 target_link_libraries(number
         PUBLIC Qt5::Core
         ${GMP_LIBRARIES}

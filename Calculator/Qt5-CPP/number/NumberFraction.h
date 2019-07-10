@@ -5,6 +5,7 @@
 #pragma once
 
 #include "NumberBase.h"
+#include "GmpType.h"
 
 class Number;
 namespace detail {
@@ -116,6 +117,6 @@ private:
   explicit NumberFraction(const NumberError* value);
 
 private:
-  mpq_t _mpq;
+  GmpType<mpq_t> _mpq;
 };
 } // namespace detail
