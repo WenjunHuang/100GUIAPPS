@@ -18,6 +18,9 @@ repositories {
 
 dependencies {
     implementation(compose.desktop.currentOs)
+    implementation("org.xerial:sqlite-jdbc:3.36.0.1")
+    implementation("org.jooq:jooq:3.15.1")
+    implementation("io.arrow-kt:arrow-fx:0.12.1")
 }
 
 tasks.withType<KotlinCompile>() {
