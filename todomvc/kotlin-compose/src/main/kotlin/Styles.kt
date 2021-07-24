@@ -4,6 +4,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.platform.Font
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 
 object Styles {
@@ -27,13 +28,33 @@ object Styles {
             fontFamily = fonts,
             fontWeight = FontWeight.Bold,
             fontSize = 72.sp,
+            lineHeight = 1.2.em,
             color = TitleColor
         )
+    val CreateItemTextStyle =
+        TextStyle(
+            fontFamily = fonts,
+            fontWeight = FontWeight.Normal,
+            fontSize = 36.sp,
+            lineHeight = 1.2.em,
+            color = ItemNameColor
+        )
+    val CreateItemHintTextStyle =
+        TextStyle(
+            fontFamily = fonts,
+            fontWeight = FontWeight.Normal,
+            fontStyle = FontStyle.Italic,
+            fontSize = 36.sp,
+            lineHeight = 1.2.em,
+            color = BorderHintColor
+        )
+
     val ActiveItemTextStyle =
         TextStyle(
             fontFamily = fonts,
             fontWeight = FontWeight.Normal,
             fontSize = 36.sp,
+            lineHeight = 1.2.em,
             color = ItemNameColor
         )
 
@@ -43,6 +64,7 @@ object Styles {
             fontWeight = FontWeight.Normal,
             fontStyle = FontStyle.Italic,
             fontSize = 36.sp,
+            lineHeight = 1.2.em,
             color = BorderHintColor
         )
 
@@ -51,6 +73,7 @@ object Styles {
             fontFamily = fonts,
             fontWeight = FontWeight.Normal,
             fontSize = 16.sp,
+            lineHeight = 1.2.em,
             color = StatusColor
         )
 

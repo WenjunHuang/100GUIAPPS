@@ -18,9 +18,17 @@ repositories {
 
 dependencies {
     implementation(compose.desktop.currentOs)
+    implementation("com.arkivanov.decompose:decompose:0.2.6")
+    implementation("com.arkivanov.decompose:extensions-compose-jetbrains:0.2.6")
     implementation("org.xerial:sqlite-jdbc:3.36.0.1")
     implementation("org.jooq:jooq:3.15.1")
     implementation("io.arrow-kt:arrow-fx:0.12.1")
+}
+
+sourceSets {
+    named("main") {
+        resources { srcDir("../../assets") }
+    }
 }
 
 tasks.withType<KotlinCompile>() {
